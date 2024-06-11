@@ -1,0 +1,11 @@
+{
+    "providers": [
+        "classpath:${project.build.finalName}.jar"
+    ],
+    "spi": {
+        "myCustomSpi": {
+            "provider": "myCustomProvider",
+            "enabled": true
+        }
+    }
+}

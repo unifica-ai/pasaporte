@@ -1,0 +1,5 @@
+FROM ubuntu:focal
+
+COPY container-setup.sh .
+
+RUN bash container-setup.sh

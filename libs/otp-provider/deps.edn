@@ -1,0 +1,10 @@
+{:paths ["src" "target/classes"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+
+        ;; Keycloak
+        org.keycloak/keycloak-common {:mvn/version "25.0.0"}
+        org.keycloak/keycloak-core   {:mvn/version "25.0.0"}
+        org.keycloak/keycloak-server-spi {:mvn/version "25.0.0"}}
+ :aliases
+ {:build {:deps {io.github.clojure/tools.build {:git/tag "v0.10.4" :git/sha "31388ff"}}
+          :ns-default build}}}
