@@ -24,8 +24,10 @@
    [:h1.text-2xl "Pasaporte"]
    (biff/form
      {:action "/auth/redirect"}
-     [:.flex
-      [:button.link {:type "submit"} "Sign in"]])))
+     [:<>
+      [:button.link {:type "submit"} "Sign in"]
+      [:.h-1]
+      [:a.link {:href "/auth/config"} "Show config"]])))
 
 (def module
   {:routes [["" {:middleware [mid/wrap-redirect-signed-in]}

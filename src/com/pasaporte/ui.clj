@@ -1,11 +1,12 @@
 (ns com.pasaporte.ui
-  (:require [cheshire.core :as cheshire]
-            [clojure.java.io :as io]
-            [com.pasaporte.settings :as settings]
-            [com.biffweb :as biff]
-            [ring.middleware.anti-forgery :as csrf]
-            [ring.util.response :as ring-response]
-            [rum.core :as rum]))
+  (:require
+   [cheshire.core :as cheshire]
+   [clojure.java.io :as io]
+   [com.biffweb :as biff]
+   [com.pasaporte.settings :as settings]
+   [ring.middleware.anti-forgery :as csrf]
+   [ring.util.response :as ring-response]
+   [rum.core :as rum]))
 
 (defn css-path []
   (if-some [last-modified (some-> (io/resource "public/css/main.css")
@@ -66,3 +67,11 @@
             (if (= status 404)
               "Page not found."
               "Something went wrong.")]))})
+
+(defn dl [map]
+  [:.mt-6.border-t.border-gray-100
+   [:dl
+    (for [[k v] map]
+      [:.px-4.py-6.sm:grid.sm:grid-cols-3.sm:gap-4.sm:px-0
+       [:dt (name k)]
+       [:dd (biff/pred-> v some? pr-str)]])]])

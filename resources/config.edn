@@ -26,8 +26,10 @@
  :recaptcha/secret-key #biff/secret RECAPTCHA_SECRET_KEY
  :recaptcha/site-key   #biff/env RECAPTCHA_SITE_KEY
 
+ :biff.nrepl/host #or [#biff/env NREPL_HOST "0.0.0.0"]
  :biff.nrepl/port #or [#biff/env NREPL_PORT "7888"]
- :biff.nrepl/args ["--port" #ref [:biff.nrepl/port]
+ :biff.nrepl/args ["--host" #ref [:biff.nrepl/host]
+                   "--port" #ref [:biff.nrepl/port]
                    "--middleware" "[cider.nrepl/cider-middleware,refactor-nrepl.middleware/wrap-refactor]"]
 
  :biff.system-properties/user.timezone                 "UTC"
@@ -60,6 +62,6 @@
  :keycloak/client-id #biff/env KEYCLOAK_CLIENT_ID
  :keycloak/client-secret #biff/secret KEYCLOAK_SECRET
 
- :keycloak/debug true
- :keycloak/debug-body true
+ :keycloak/debug #biff/env KEYCLOAK_DEBUG
+ :keycloak/debug-body #biff/env KEYCLOAK_DEBUG_BODY
  }

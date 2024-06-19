@@ -18,6 +18,23 @@
   ul, ol {
     @apply my-3 pl-10;
   }
+
+  dl {
+    @apply divide-y divide-gray-100
+  }
+
+  h2 {
+    @apply text-lg
+  }
+
+  dt {
+    @apply text-sm font-medium leading-6 text-gray-900
+  }
+
+  dd {
+    @apply mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0
+  }
+
 }
 
 @layer components {

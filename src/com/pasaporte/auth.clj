@@ -8,11 +8,12 @@
    [clojure.string :as str]
    [clojure.tools.logging :as log]
    [com.biffweb :as biff]
+   [com.pasaporte.ui :refer [dl] :as ui]
    [ring.util.codec :as ru])
   (:import
    (java.security.cert CertificateFactory)
-   (org.keycloak TokenVerifier)
-   (java.time Instant)))
+   (java.time Instant)
+   (org.keycloak TokenVerifier)))
 
 (defn authinfo
   "Returns info for the currently loged in user"
@@ -142,11 +143,18 @@
      :headers {"location" url}}))
 
 (defn oidc-get-well-known-config
-  [{:keycloak/keys [realm-url]}]
+  [{:keycloak/keys [realm-url debug]}]
   (let [url (str realm-url "/.well-known/openid-configuration")]
-    (-> (http/get url {:as :json}) :body
+    (-> (http/get url {:as :json :debug debug}) :body
         (->> (cske/transform-keys csk/->kebab-case-keyword))
         (update-keys (comp (partial keyword "keycloak") name)))))
+
+(defn config [ctx]
+  (let [conf (oidc-get-well-known-config ctx)]
+    (ui/page
+     ctx
+     [:h2 "Keycloak Config"
+      (dl conf)])))
 
 (defn jwks-keys
   [{:keycloak/keys [jwks-uri]}]
@@ -191,5 +199,6 @@
 (defn module [options]
   {:schema schema
    :routes ["/auth" {:middleware [[wrap-options (merge default-options options)]]}
+            ["/config" {:get config}]
             ["/redirect" {:post oidc-redirect}]
             ["/signin" {:get oidc-signin}]]})

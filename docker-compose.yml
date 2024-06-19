@@ -4,6 +4,10 @@ services:
   app:
     build:
       context: .
+    env_file: config.env
+    ports:
+      - 8090:8090
+      - 7888:7888
 
   keycloak:
     image: quay.io/keycloak/keycloak:25.0
@@ -28,7 +32,9 @@ services:
     depends_on:
       - keycloakdb
     ports:
-      - 8070:8080
+      - 8080:8080
+    volumes:
+      - ./providers:/opt/keycloak/providers
 
   keycloakdb:
     image: postgres:15
@@ -39,5 +45,10 @@ services:
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
 
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
 volumes:
   postgres_data:
