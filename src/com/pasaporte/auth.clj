@@ -157,8 +157,8 @@
       (dl conf)])))
 
 (defn jwks-keys
-  [{:keycloak/keys [jwks-uri]}]
-  (-> (http/get jwks-uri {:as :json}) :body :keys))
+  [{:keycloak/keys [jwks-uri debug]}]
+  (-> (http/get jwks-uri {:as :json :debug debug}) :body :keys))
 
 (defonce ^:private keycloak-config (atom {}))
 
