@@ -54,7 +54,9 @@
 
  ;; Keycloak
 
- :keycloak/base-url #biff/env KEYCLOAK_BASE_URL
+ :keycloak/base-url {:prod #biff/env KEYCLOAK_PROD_BASE_URL
+                     :default #biff/env KEYCLOAK_BASE_URL}
+ :keycloak/port {:prod 443 :default 8080}
 
  :keycloak/realm #biff/env KEYCLOAK_REALM
  :keycloak/realm-url #join [#ref [:keycloak/base-url] "/realms/" #ref [:keycloak/realm]]
